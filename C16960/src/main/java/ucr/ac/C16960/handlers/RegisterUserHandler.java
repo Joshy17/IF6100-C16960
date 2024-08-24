@@ -6,6 +6,6 @@ public interface RegisterUserHandler {
         final record Success(String message) implements Result{}
         final record InvalidDate(String...fields) implements Result{}
     }
-    void RegisterUser(Command command);
+    Result RegisterUser(Command command);
 
 }
