@@ -4,6 +4,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.beans.factory.annotation.Autowired;
 import ucr.ac.C16960.handlers.RegisterUserHandler;
+
+
 @RestController
 public class HelloController {
 
@@ -17,10 +19,11 @@ public class HelloController {
       var result = handler.RegisterUser(new RegisterUserHandler.Command("Joshua", "joshua@gmail.com", "123ASD"));
 
 
-      return switch (result){
-          case RegisterUserHandler.Result.Success success-> success.message();
-          case RegisterUserHandler.Result.InvalidDate invalidDate->
-            "Invalid date: " + String.join(" , ", invalidDate.fields());
-      };
+        return switch (result) {
+            case RegisterUserHandler.Result.Success success -> success.message();
+            case RegisterUserHandler.Result.InvalidData invalidData ->
+                    "Invalid data: " + String.join(", ", invalidData.fields());
+            case RegisterUserHandler.Result.EmailAlreadyExists emailAlreadyExists -> null;
+        };
     }
 }
