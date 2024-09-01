@@ -1,11 +1,22 @@
 package ucr.ac.C16960.handlers;
 
 public interface RegisterUserHandler {
-    record Command (String name, String email, String password) {}
-    sealed interface Result{
-        final record Success(String message) implements Result{}
-        final record InvalidDate(String...fields) implements Result{}
+    //Entrada
+    record Command(String name, String email, String password) {
     }
+
+    //Salida
+    sealed interface Result {
+        record Success(String message) implements Result {
+        }
+
+        record InvalidData(String... fields) implements Result {
+        }
+        record EmailAlreadyExists(String email) implements Result {
+        }
+    }
+
+    //Proceso
     Result RegisterUser(Command command);
 
 }
