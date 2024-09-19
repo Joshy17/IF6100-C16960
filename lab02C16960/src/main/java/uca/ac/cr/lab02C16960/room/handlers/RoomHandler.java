@@ -42,7 +42,7 @@ public class RoomHandler {
 
         userRepository.save(creator);
 
-        return room.getIdentifier(); // Devuelve el identificador de la sala
+        return room.getIdentifier(); // Retorna el identificador único generado
     }
 
     public String joinRoom(String roomId, String alias) {
@@ -65,13 +65,18 @@ public class RoomHandler {
             return "El alias ya existe en la sala."; // Mensaje descriptivo
         }
 
+        // Crear nuevo usuario y añadirlo a la sala
         UserEntity user = new UserEntity();
         user.setAlias(alias);
         user.setRoom(room);
 
         userRepository.save(user);
 
-        return null; // No error
+        return null; // Retorna null si no hubo errores
+    }
+
+    public RoomEntity getRoomByIdentifier(String roomId) {
+        return roomRepository.findByIdentifier(roomId).orElse(null);
     }
 
     public List<UserEntity> getUsersInRoom(RoomEntity room) {

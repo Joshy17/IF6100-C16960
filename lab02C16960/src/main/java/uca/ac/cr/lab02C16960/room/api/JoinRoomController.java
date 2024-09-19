@@ -25,16 +25,29 @@ public class JoinRoomController {
     }
 
     @PostMapping("/join")
-    public ResponseEntity<String> joinRoom(@RequestBody Map<String, String> request) {
+    public ResponseEntity<Map<String, Object>> joinRoom(@RequestBody Map<String, String> request) {
         String roomId = request.get("id");
         String alias = request.get("alias");
 
         // Validación y manejo de errores
         String result = roomHandler.joinRoom(roomId, alias);
         if (result != null && result.startsWith("El")) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(result);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("message", result));
         }
 
-        return ResponseEntity.ok("Te has unido a la sala correctamente.");
+        RoomEntity room = roomHandler.getRoomByIdentifier(roomId);
+        if (room == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("message", "El identificador de la sala no es válido."));
+        }
+
+        // Construir la respuesta con el id de la sala, el nombre y la lista de usuarios
+        Map<String, Object> response = new HashMap<>();
+        response.put("id", room.getIdentifier());
+        response.put("name", room.getName());
+        response.put("users", roomHandler.getUsersInRoom(room).stream()
+                .map(UserEntity::getAlias)
+                .collect(Collectors.toList()));
+
+        return ResponseEntity.ok(response);
     }
 }

@@ -14,6 +14,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/C16960/room")
 public class MessageController {
+
     private final MessageHandler messageHandler;
 
     public MessageController(MessageHandler messageHandler) {
