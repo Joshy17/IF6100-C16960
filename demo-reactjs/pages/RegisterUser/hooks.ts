@@ -1,7 +1,7 @@
-import { useApiHandler } from "../../src/hooks/useApiHandler";
-import { RegisterUserRequest } from "../../src/models/users.models";
-import { registerUser } from "../../src/services/user.service";
-import { RegisterUserForm } from "./types";
+import { useApiHandler } from '../../src/hooks/useApiHandler';
+import { RegisterUserRequest } from '../../src/models/users.models';
+import { registerUser } from '../../src/services/user.service';
+import { RegisterUserForm } from './types';
 
 export const useDependencies = () => {
 	const { handleMutation } = useApiHandler();
@@ -45,7 +45,7 @@ export const useDependencies = () => {
 		}
 
 		const request: RegisterUserRequest = {
-			name: parms.name,
+			user: parms.name,
 			email: parms.email,
 			password: parms.password,
 		};
