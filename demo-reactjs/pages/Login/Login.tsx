@@ -1,10 +1,15 @@
 import { Button, Card, Divider, Form, Input, Space } from 'antd';
 import useDependencies from './hooks';
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
 	const { handleLogin, handleCancel, rules } = useDependencies();
-
+	//TODO mover este useNavigate para el hook de dependencies
+	const navigate = useNavigate();
+	const goToRegister = () => {
+		navigate('/Register');
+	};
 	return (
 		<>
 			<Card title='Login'>
@@ -27,6 +32,15 @@ const Login = () => {
 						</Button>
 					</Space>
 				</Form>
+
+				<Button
+					type='primary'
+					shape='round'
+					size='large'
+					onClick={goToRegister}
+				>
+					Register
+				</Button>
 			</Card>
 		</>
 	);
