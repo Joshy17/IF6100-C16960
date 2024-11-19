@@ -7,11 +7,13 @@ import {
 	AuthenticationResponse,
 } from '../../src/models/users.models';
 
+import { useNavigate } from 'react-router-dom';
+
 const useDependencies = () => {
 	const { setSessionStore, clearSession } = useSessionHandler();
 	const { handleMutation } = useApiHandler();
 	//const { setErrorNotificaiton } = useNotificationHandler();
-	//const navigate = useNavigate();
+	const navigate = useNavigate();
 
 	const initialValues = {
 		username: '',
@@ -45,11 +47,11 @@ const useDependencies = () => {
 		} else {
 			const response = result as AuthenticationResponse;
 			setSessionStore({ ...response });
-			//	navigate('/');
+				navigate('/');
 		}
 	};
 	const handleCancel = () => {
-		//	navigate('/');
+			//navigate('/');
 	};
 
 	return { initialValues, rules, handleLogin, handleCancel };
